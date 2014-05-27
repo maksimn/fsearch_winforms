@@ -1,0 +1,9 @@
+D:\PrevRabStol\MyProgramming\FilesSearching\bin\Debug\FilesSearching.exe.config
+D:\PrevRabStol\MyProgramming\FilesSearching\bin\Debug\FilesSearching.exe
+D:\PrevRabStol\MyProgramming\FilesSearching\bin\Debug\FilesSearching.pdb
+D:\PrevRabStol\MyProgramming\FilesSearching\obj\Debug\FilesSearching.csprojResolveAssemblyReference.cache
+D:\PrevRabStol\MyProgramming\FilesSearching\obj\Debug\FilesSearching.MainForm.resources
+D:\PrevRabStol\MyProgramming\FilesSearching\obj\Debug\FilesSearching.Properties.Resources.resources
+D:\PrevRabStol\MyProgramming\FilesSearching\obj\Debug\FilesSearching.csproj.GenerateResource.Cache
+D:\PrevRabStol\MyProgramming\FilesSearching\obj\Debug\FilesSearching.exe
+D:\PrevRabStol\MyProgramming\FilesSearching\obj\Debug\FilesSearching.pdb
