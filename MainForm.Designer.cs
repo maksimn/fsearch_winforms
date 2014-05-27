@@ -200,6 +200,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Поиск файлов";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormClosedHandler);
             this.ResumeLayout(false);
             this.PerformLayout();
 
