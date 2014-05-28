@@ -65,6 +65,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Задать";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.folderButtonClickHandler);
             // 
             // label2
             // 
@@ -158,6 +159,7 @@
             this.startButton.TabIndex = 13;
             this.startButton.Text = "Начать";
             this.startButton.UseVisualStyleBackColor = true;
+            this.startButton.Click += new System.EventHandler(this.startButtonClickHandler);
             // 
             // stopButton
             // 
@@ -167,6 +169,7 @@
             this.stopButton.TabIndex = 14;
             this.stopButton.Text = "Стоп";
             this.stopButton.UseVisualStyleBackColor = true;
+            this.stopButton.Click += new System.EventHandler(this.stopButtonClickHandler);
             // 
             // treeView
             // 
