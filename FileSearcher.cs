@@ -6,17 +6,29 @@ using System.Threading.Tasks;
 namespace FilesSearching {
     // FileSearcher class encapsulate logics to find files 
     class FileSearcher {
+        // Nested types:
+        private enum FilesSearchingMode {
+            Name,
+            Text,
+            NameAndText
+        }
+
+        // Properties:
         public Int32 NumFiles { get; set; } // Number of files processed
         public String Directory { get; set; }
         public String FilePattern { get; set; }
+        public String TextPattern { get; set; }
         public TimeSpan Time { get; set; }
 
+        // Events:
         public event EventHandler<NewFileProcessedEventArgs> NewFileProcessed;
         public event EventHandler<NewFileFoundEventArgs> NewFileFound;
 
+        // Fields:
         private CancellationTokenSource cts;
         private DateTime beginning;
 
+        // Methods:
         public async Task StartSearching() {
             await Task.Run(() => { FindFiles(new DirectoryInfo(Directory)); });
         }

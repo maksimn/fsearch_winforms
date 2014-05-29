@@ -109,6 +109,7 @@ namespace FilesSearching {
         private void SetSearchingParameters() {
             fileSearcher.Directory = folderTextBox.Text;
             fileSearcher.FilePattern = fileTextBox.Text;
+            fileSearcher.TextPattern = textInFileTextBox.Text;
             fileSearcher.NumFiles = 0;
         }
 
