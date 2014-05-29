@@ -62,14 +62,15 @@ namespace FilesSearching {
         }
 
         protected virtual void OnNewFileProcessed(NewFileProcessedEventArgs e) {
-            EventHandler<NewFileProcessedEventArgs> temp = Volatile.Read(ref NewFileProcessed);
-            if (temp != null) {
-                temp(this, e);
-            }
+            RaiseEvent(e, ref NewFileProcessed);
         }
 
         protected virtual void OnNewFileFound(NewFileFoundEventArgs e) {
-            EventHandler<NewFileFoundEventArgs> temp = Volatile.Read(ref NewFileFound);
+            RaiseEvent(e, ref NewFileFound);
+        }
+
+        private void RaiseEvent<TEventArgs>(TEventArgs e, ref EventHandler<TEventArgs> eventDelegate) {
+            EventHandler<TEventArgs> temp = Volatile.Read(ref eventDelegate);
             if (temp != null) {
                 temp(this, e);
             }
