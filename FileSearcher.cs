@@ -7,11 +7,7 @@ namespace FilesSearching {
     // FileSearcher class encapsulate logics to find files 
     class FileSearcher {
         // Nested types:
-        private enum FilesSearchingMode {
-            Name,
-            Text,
-            NameAndText
-        }
+        private enum FilesSearchingMode { Name, Text, NameAndText }
 
         // Properties:
         public Int32 NumFiles { get; set; } // Number of files processed
@@ -27,6 +23,7 @@ namespace FilesSearching {
         // Fields:
         private CancellationTokenSource cts;
         private DateTime beginning;
+        private FilesSearchingMode fsm;
 
         // Methods:
         public async Task StartSearching() {
@@ -36,6 +33,7 @@ namespace FilesSearching {
         private void FindFiles(DirectoryInfo dir) {
             beginning = DateTime.Now;
             cts = new CancellationTokenSource();
+            SetFileSearchingMode();
             ProcessDirectories(dir, cts.Token);
         }
 
@@ -52,9 +50,24 @@ namespace FilesSearching {
                 foreach (var file in files) {
                     NumFiles++;
                     Time = DateTime.Now.Subtract(beginning);
-                    OnNewFileProcessed(new NewFileProcessedEventArgs());
-                    if (file.Name.Contains(FilePattern)) {
-                        OnNewFileFound(new NewFileFoundEventArgs(file.FullName));
+                    OnNewFileProcessed(new NewFileProcessedEventArgs(NumFiles, file.Name, Time.ToString().Substring(0, 11)));
+                    /// Here I need a Design Pattern:
+                    switch (fsm) {
+                        case FilesSearchingMode.Name: {
+                            if (file.Name.Contains(FilePattern)) {
+                                OnNewFileFound(new NewFileFoundEventArgs(file.FullName));
+                            }
+                            break; 
+                        }
+                        case FilesSearchingMode.Text: {
+//                            System.Windows.Forms.MessageBox.Show("FileSearchingMode.Text");
+                            break; 
+                        }
+                        case FilesSearchingMode.NameAndText: {
+//                            System.Windows.Forms.MessageBox.Show("FileSearchingMode.NameText");
+                            break;
+                        }
+                        default: break;
                     }
                 }
             } catch (Exception) {
@@ -78,6 +91,16 @@ namespace FilesSearching {
 
         public void Stop() {
             cts.Cancel();
+        }
+
+        private void SetFileSearchingMode() {
+            if (TextPattern == String.Empty) {
+                fsm = FilesSearchingMode.Name;
+            } else if (FilePattern == String.Empty && TextPattern != String.Empty) {
+                fsm = FilesSearchingMode.Text;
+            } else {
+                fsm = FilesSearchingMode.NameAndText;
+            }
         }
     }
 }

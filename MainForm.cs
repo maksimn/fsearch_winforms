@@ -35,8 +35,9 @@ namespace FilesSearching {
         }
 
         private void NewFileProcessedMsg(Object o, NewFileProcessedEventArgs e) {
-            qtyFilesLabel.Invoke(new Action<Int32>((num) => qtyFilesLabel.Text = num.ToString()), fileSearcher.NumFiles);
-            timeLabel.Invoke(new Action<String>((str) => timeLabel.Text = str), fileSearcher.Time.ToString().Substring(0, 11));
+            qtyFilesLabel.Invoke(new Action<Int32>(num => qtyFilesLabel.Text = num.ToString()), e.NumFiles);
+            timeLabel.Invoke(new Action<String>(str => timeLabel.Text = str), e.Time);
+            currFileLabel.Invoke(new Action<String>(str => currFileLabel.Text = str), e.FileName);
         }
 
         private void NewFileFoundMsg(Object o, NewFileFoundEventArgs e) {
@@ -94,12 +95,14 @@ namespace FilesSearching {
 
         private void stopButtonClickHandler(object sender, EventArgs e) {
             fileSearcher.Stop();
+            EmptyCurrFileLabel();
         }
 
         private async void startButtonClickHandler(object sender, EventArgs e) {
             EmptyTreeView();
             SetSearchingParameters();
-            await fileSearcher.StartSearching();    
+            await fileSearcher.StartSearching();
+            EmptyCurrFileLabel();
         }
 
         private void EmptyTreeView() {
@@ -122,9 +125,13 @@ namespace FilesSearching {
             this.folderBrowserDialog.Description = "Задайте директорию для поиска файлов.";
             this.folderBrowserDialog.SelectedPath = folderTextBox.Text;
             DialogResult dialogResult = this.folderBrowserDialog.ShowDialog();
-            if (dialogResult == System.Windows.Forms.DialogResult.OK) {
+            if (dialogResult == DialogResult.OK) {
                 folderTextBox.Text = folderBrowserDialog.SelectedPath;
             }
+        }
+
+        private void EmptyCurrFileLabel() {
+            currFileLabel.Text = String.Empty;
         }
     }
 }
