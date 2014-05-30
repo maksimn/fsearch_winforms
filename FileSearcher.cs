@@ -51,20 +51,15 @@ namespace FilesSearching {
                     NumFiles++;
                     Time = DateTime.Now.Subtract(beginning);
                     OnNewFileProcessed(new NewFileProcessedEventArgs(NumFiles, file.Name, Time.ToString().Substring(0, 11)));
-                    /// Here I need a Design Pattern:
                     switch (fsm) {
                         case FilesSearchingMode.Name: {
-                            if (file.Name.Contains(FilePattern)) {
-                                OnNewFileFound(new NewFileFoundEventArgs(file.FullName));
-                            }
-                            break; 
+                            FileProcessingNameMode(file);
+                            break;
                         }
                         case FilesSearchingMode.Text: {
-//                            System.Windows.Forms.MessageBox.Show("FileSearchingMode.Text");
-                            break; 
+                            break;
                         }
                         case FilesSearchingMode.NameAndText: {
-//                            System.Windows.Forms.MessageBox.Show("FileSearchingMode.NameText");
                             break;
                         }
                         default: break;
@@ -100,6 +95,12 @@ namespace FilesSearching {
                 fsm = FilesSearchingMode.Text;
             } else {
                 fsm = FilesSearchingMode.NameAndText;
+            }
+        }
+
+        private void FileProcessingNameMode(FileInfo file) {
+            if (file.Name.Contains(FilePattern)) {
+                OnNewFileFound(new NewFileFoundEventArgs(file.FullName));
             }
         }
     }
