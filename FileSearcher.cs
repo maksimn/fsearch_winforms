@@ -50,16 +50,18 @@ namespace FilesSearching {
                 foreach (var file in files) {
                     NumFiles++;
                     Time = DateTime.Now.Subtract(beginning);
-                    OnNewFileProcessed(new NewFileProcessedEventArgs(NumFiles, file.Name, Time.ToString().Substring(0, 11)));
+                    OnNewFileProcessed(new NewFileProcessedEventArgs(file.Name));
                     switch (fsm) {
                         case FilesSearchingMode.Name: {
                             FileProcessingNameMode(file);
                             break;
                         }
                         case FilesSearchingMode.Text: {
+                            FileProcessingTextMode(file);
                             break;
                         }
                         case FilesSearchingMode.NameAndText: {
+                            FileProcessingNameAndTextMode(file);
                             break;
                         }
                         default: break;
@@ -101,6 +103,22 @@ namespace FilesSearching {
         private void FileProcessingNameMode(FileInfo file) {
             if (file.Name.Contains(FilePattern)) {
                 OnNewFileFound(new NewFileFoundEventArgs(file.FullName));
+            }
+        }
+
+        private void FileProcessingTextMode(FileInfo fi) {
+            String s = File.ReadAllText(fi.FullName);
+            if (s.Contains(TextPattern)) {
+                OnNewFileFound(new NewFileFoundEventArgs(fi.FullName));
+            }
+        }
+
+        private void FileProcessingNameAndTextMode(FileInfo fi) {
+            if (fi.Name.Contains(FilePattern)) {
+                String s = File.ReadAllText(fi.FullName);
+                if (s.Contains(TextPattern)) {
+                    OnNewFileFound(new NewFileFoundEventArgs(fi.FullName));
+                }
             }
         }
     }

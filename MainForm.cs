@@ -35,8 +35,8 @@ namespace FilesSearching {
         }
 
         private void NewFileProcessedMsg(Object o, NewFileProcessedEventArgs e) {
-            qtyFilesLabel.Invoke(new Action<Int32>(num => qtyFilesLabel.Text = num.ToString()), e.NumFiles);
-            timeLabel.Invoke(new Action<String>(str => timeLabel.Text = str), e.Time);
+            qtyFilesLabel.Invoke(new Action<Int32>(num => qtyFilesLabel.Text = num.ToString()), ((FileSearcher)o).NumFiles);
+            timeLabel.Invoke(new Action<String>(str => timeLabel.Text = str), ((FileSearcher)o).Time.ToString().Substring(0,11));
             currFileLabel.Invoke(new Action<String>(str => currFileLabel.Text = str), e.FileName);
         }
 
